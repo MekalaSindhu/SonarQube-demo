@@ -8,12 +8,6 @@ pipeline {
             }
         }
 
-        stage('Install Dependencies') {
-            steps {
-                sh 'npm install'
-            }
-        }
-
         stage('SonarQube Analysis') {
             environment {
                 SONAR_AUTH_TOKEN = credentials('SONAR_AUTH_TOKEN')
@@ -22,7 +16,7 @@ pipeline {
                 withSonarQubeEnv('SonarQube') {
                     sh '''
                     sonar-scanner \
-                      -Dsonar.projectKey=node-app \
+                      -Dsonar.projectKey=SonarQube-demo \
                       -Dsonar.sources=. \
                       -Dsonar.host.url=http://192.168.0.115:9000 \
                       -Dsonar.login=$SONAR_AUTH_TOKEN
@@ -33,10 +27,4 @@ pipeline {
 
         stage('Quality Gate') {
             steps {
-                timeout(time: 1, unit: 'HOURS') {
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-        }
-    }
-}
+                tim
