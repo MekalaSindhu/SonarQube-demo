@@ -14,13 +14,9 @@ pipeline {
             }
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    sh '''
-                    sonar-scanner \
-                      -Dsonar.projectKey=SonarQube-demo \
-                      -Dsonar.sources=. \
-                      -Dsonar.host.url=http://192.168.0.115:9000 \
-                      -Dsonar.login=$SONAR_AUTH_TOKEN
-                    '''
+                    tool 'SonarScanner'
+                    sh 'sonar-scanner -Dsonar.projectKey=SonarQube-demo -Dsonar.sources=.'
+                }
                 }
             }
         }
